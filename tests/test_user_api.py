@@ -119,3 +119,13 @@ class TestUserAPI:
         retrieved_user = response.json()
         assert retrieved_user["username"] == username
         self.created_users.append(username)
+
+    def test_get_nonexistent_user(self):
+        """Тест получения несуществующего пользователя"""
+        fake_username = f"fake_get_{int(time.time())}"
+        try:
+            self.base.get_user(fake_username)
+            pytest.fail("Should raise exception")
+        except:
+            pass
+
