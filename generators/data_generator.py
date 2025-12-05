@@ -1,6 +1,9 @@
 from faker import Faker
 import random
 from typing import Dict, Any, List
+import json
+import allure
+
 
 class UserDataGenerator:
     """Генератор тестовых данных для пользователей"""
@@ -9,6 +12,7 @@ class UserDataGenerator:
         self.fake = Faker(locale)
         self.user_statuses = [0, 1, 2, 3]
 
+    @allure.step("Генерация данных пользователя")
     def generate_single_user(self, username: str = None) -> Dict[str, Any]:
         """Генерация данных одного пользователя"""
         user_data = {
@@ -21,19 +25,32 @@ class UserDataGenerator:
             "phone": self.fake.phone_number(),
             "userStatus": random.choice(self.user_statuses)
         }
+        allure.attach(
+            json.dumps(user_data, indent=2, ensure_ascii=False),  # <-- Теперь json определен
+            name="Сгенерированные данные",
+            attachment_type=allure.attachment_type.JSON
+        )
         return user_data
 
+    @allure.step("Генерация {count} пользователей")
     def generate_bulk_users(self, count: int = 5) -> List[Dict[str, Any]]:
         """Генерация списка пользователей"""
         users = [self.generate_single_user() for _ in range(count)]
+        allure.attach(
+            f"Сгенерировано {len(users)} пользователей",
+            name="Bulk генерация",
+            attachment_type=allure.attachment_type.TEXT
+        )
         return users
 
+    @allure.step("Генерация пользователя со статусом {status}")
     def generate_user_with_specific_status(self, status: int) -> Dict[str, Any]:
         """Генерация пользователя с конкретным статусом"""
         user = self.generate_single_user()
         user["userStatus"] = status
         return user
 
+    @allure.step("Генерация невалидных данных: {invalid_type}")
     def generate_invalid_user_data(self, invalid_type: str = "missing_required") -> Dict[str, Any]:
         """Генерация невалидных данных для негативных тестов"""
         if invalid_type == "missing_required":
@@ -58,3 +75,9 @@ class UserDataGenerator:
 
         else:
             return {"invalid": "data"}
+
+
+
+
+
+
