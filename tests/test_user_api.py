@@ -107,3 +107,15 @@ class TestUserAPI:
         response = self.base.delete_user(fake_username)
         assert response.status_code in [200, 404]
 
+    def test_get_user_success(self):
+        """Тест получения данных пользователя"""
+        username = f"get_user_{int(time.time())}"
+        user_data = self.generator.generate_single_user(username)
+        self.base.create_user(user_data)
+
+        response = self.base.get_user(username)
+        assert response.status_code == 200
+
+        retrieved_user = response.json()
+        assert retrieved_user["username"] == username
+        self.created_users.append(username)
