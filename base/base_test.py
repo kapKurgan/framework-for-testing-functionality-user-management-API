@@ -1,4 +1,6 @@
 import requests
+from typing import Dict, Any, Optional
+import json
 
 
 class BaseTest:
@@ -34,18 +36,29 @@ class BaseTest:
         response.raise_for_status()
         return response
 
-    def create_user(self, user_data): return self._make_request("POST", "/user", data=user_data)
+    def create_user(self, user_data):
+        """Создание пользователя"""
+        return self._make_request("POST", "/user", data=user_data)
 
-    def get_user(self, username): return self._make_request("GET", f"/user/{username}")
+    def get_user(self, username):
+        """Получение данных пользователя"""
+        return self._make_request("GET", f"/user/{username}")
 
-    def update_user(self, username, user_data): return self._make_request("PUT", f"/user/{username}", data=user_data)
+    def update_user(self, username, user_data):
+        """Обновление данных пользователя"""
+        return self._make_request("PUT", f"/user/{username}", data=user_data)
 
-    def delete_user(self, username): return self._make_request("DELETE", f"/user/{username}")
+    def delete_user(self, username):
+        """Удаление пользователя"""
+        return self._make_request("DELETE", f"/user/{username}")
 
-    def login(self, username, password): return self._make_request("GET", "/user/login",
-                                                                   params={"username": username, "password": password})
+    def login(self, username, password):
+        """Авторизация пользователя"""
+        return self._make_request("GET", "/user/login", params={"username": username, "password": password})
 
-    def logout(self): return self._make_request("GET", "/user/logout")
+    def logout(self):
+        """Выход из системы"""
+        return self._make_request("GET", "/user/logout")
 
     def log_response(self, response: requests.Response, test_name: str = ""):
         """Логирование ответа для отладки"""
@@ -54,3 +67,11 @@ class BaseTest:
         print(f"URL: {response.request.url}")
         print(f"СТАТУС: {response.status_code}")
         print(f"{'=' * 50}\n")
+
+    def validate_json_schema(self, response_data: Dict, expected_schema: Dict) -> bool:
+        """Базовая валидация JSON схемы"""
+        for key, value_type in expected_schema.items():
+            if key not in response_data or not isinstance(response_data[key], value_type):
+                return False
+        return True
+
