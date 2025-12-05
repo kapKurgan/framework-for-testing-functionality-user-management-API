@@ -71,3 +71,16 @@ class TestUserAPI:
         response = self.base.logout()
         assert response.status_code == 200
         self.created_users.append(username)
+
+    def test_update_user_success(self):
+        """Тест успешного обновления данных пользователя"""
+        username = f"update_user_{int(time.time())}"
+        original_data = self.generator.generate_single_user(username)
+        self.base.create_user(original_data)
+
+        updated_data = self.generator.generate_single_user(username)
+        updated_data["firstName"] = "UpdatedFirstName"
+
+        response = self.base.update_user(username, updated_data)
+        assert response.status_code == 200
+        self.created_users.append(username)
