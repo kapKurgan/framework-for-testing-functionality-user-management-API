@@ -60,3 +60,14 @@ class TestUserAPI:
         """Тест неуспешного входа с невалидными данными"""
         response = self.base.login(username, password)
         assert response.status_code == 200
+
+    def test_logout_success(self):
+        """Тест успешного выхода из системы"""
+        username = f"logout_user_{int(time.time())}"
+        user_data = self.generator.generate_single_user(username)
+        self.base.create_user(user_data)
+        self.base.login(username, user_data["password"])
+
+        response = self.base.logout()
+        assert response.status_code == 200
+        self.created_users.append(username)
