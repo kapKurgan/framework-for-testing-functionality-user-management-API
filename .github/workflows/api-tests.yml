@@ -55,7 +55,8 @@ jobs:
       # Сохраняет HTML-отчет в уникальную папку
       # Тесты обращаются напрямую к https://petstore.swagger.io/v2
       - name: Запуск тестов
-        run: pytest ${{ github.event.inputs.SCENARIO }} --html=./reports/${{ github.run_id }}/index.html
+#        run: pytest ${{ github.event.inputs.SCENARIO }} --html=./reports/${{ github.run_id }}/index.html
+        run: pytest ${{ github.event.inputs.SCENARIO }} --html=./reports/${{ github.run_id }}/index.html --alluredir=reports/${{ github.run_id }}/allure-results
         env:
           # Хардкод URL реального API (можно вынести в переменную окружения репозитория)
           API_BASE_URL: https://petstore.swagger.io/v2
@@ -81,3 +82,4 @@ jobs:
           name: test-reports-${{ github.run_id }}
           path: reports/${{ github.run_id }}/
           retention-days: 30  # Хранить 30 дней
+

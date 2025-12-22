@@ -4,6 +4,7 @@
 
 Создание автоматизированного тестового фреймворка для проверки функциональности API управления пользователями на базе PetStore Swagger API с генерацией тестовых данных, системой отчетности.
 
+
 ## Задачи
 
 - Разработка базового архитектурного каркаса с реиспользуемыми компонентами
@@ -17,52 +18,49 @@
 
 ```bash
 framework-for-testing-functionality-user-management-API/
-|
-|-- pytest.ini                 # Конфигурация pytest
-|-- conftest.py                # Фикстуры и настройка окружения
-|-- requirements.txt           # Зависимости Python
-|-- Dockerfile.base            # Dockerfile для сборки контейнера
-|-- docker-compose.ci.yaml     # Конфигурация Docker Compose для CI
-|-- mock_petstore.py           # HTTP Mock-сервер PetStore API (создан с использованием AI)
-|-- .env.example               # Пример переменных окружения
-|-- .github/
-|-- workflows/
-|   -- api-tests.yml           # GitHub Actions workflow
+|-- pytest.ini                     # Конфигурация pytest
+|-- conftest.py                    # Фикстуры и настройка окружения
+|-- requirements.txt               # Зависимости Python
 |-- base/
-|   -- base_test.py            # Базовый класс с HTTP-методами
+|   `-- base_test.py               # Базовый класс с HTTP-методами
 |-- generators/
-|   -- data_generator.py       # Генератор тестовых данных
+|   `-- data_generator.py          # Генератор тестовых данных
 |-- reports/
-|   -- report_generator.py     # Генератор отчетов
-|-- tests/
-    -- test_user_api.py        # Тестовые сценарии
-```
+|   `-- report_generator.py        # Генератор отчетов
+`-- tests/
+    `-- test_user_api.py           # Тестовые сценарии```
 
 ## Основные компоненты
 
 BaseTest (base/base_test.py)
 
-- Универсальный метод для всех HTTP-операций
-- Интеграция Allure (шаги, вложения, обработка ошибок)
-- Управление сессиями и таймаутами
+- Универсальный базовый класс для всех API-тестов
+- Прямое обращение к реальному PetStore API (URL захардкожен)
+- Поддержка Allure-отчетности (шаги, вложения, логирование)
+- Автоматическая валидация HTTP-статусов
+- Методы для всех операций: create_user, get_user, update_user, delete_user, login, logout
 - Валидация JSON-схем
 
 UserDataGenerator (generators/data_generator.py)
 
-- Генерация валидных данных пользователей
-- Создание невалидных данных (пустые поля, некорректный email, длинные строки)
-- Генерация тестовых данных
+- Генерация реалистичных тестовых данных через Faker
+- Поддержка различных локализаций
+- Генерация валидных и невалидных данных
+- Создание пакетных данных
 
 TestUserAPI (tests/test_user_api.py)
 
-- 14 тестовых сценариев с маркерами
-- 100% покрытие CRUD операций
+- 14 тестовых сценариев покрывающих все граничные случаи
+- 100% покрытие CRUD-операций
+- Сегментация тестов по маркерам (smoke, regression, performance)
+- Автоматическая очистка тестовых данных
 - Параметризованные негативные тесты
-- Проверка производительности
 
 ReportGenerator (reports/report_generator.py)
 
-- Генератор отчетов о тестировании
+- Генерация HTML, JSON и текстовых отчетов
+- Автоматический расчет статистики
+- Временные метки и продолжительность выполнения
 
 ## Поддерживаемые сценарии
 
@@ -93,7 +91,9 @@ ReportGenerator (reports/report_generator.py)
 ---------------------------------------------------------------------------------------------------------------
 ```
 
-## Как запускать тесты
+# Как запускать тесты
+
+## Локально
 
 Базовый запуск
 ```bash
@@ -128,26 +128,38 @@ pytest --alluredir=reports/allure-results
 allure serve reports/allure-results
 ```
 
-## Примечания
-Если у вас возникли проблемы с запуском, попробуйте изменить пути импорта, версию pytest.
-Загрузите все версии пакетов из файла requirements.txt, используйте следующую команду: 
+## В GitHub Actions
+
+Автоматический запуск через интерфейс GitHub:
+- Перейдите в Actions > API Tests > Run workflow
+- Выберите сценарий тестов (например, -m login)
+- Нажмите Run workflow
+- Система выполнит тесты напрямую к https://petstore.swagger.io/v2
+
+## Требования
+- Python 3.12+
+- GitHub account (для CI/CD и GitHub Pages)
+
+Установка зависимостей:
 ```bash
 pip install -r requirements.txt
 ```
 
-## Ключевые возможности:
-- HTTP Mock-сервер
-- Контейнеризация Docker и Docker Compose
-- Автоматический запуск тестов в GitHub Actions
+## Интеграция с GitHub Actions
 
-Mock PetStore Server (`mock_petstore.py`)   - с использованием AI
+Workflow автоматически:
+- Устанавливает Python 3.12
+- Устанавливает зависимости
+- Запускает тесты к реальному API
+- Генерирует HTML-отчеты
+- Публикует отчеты в GitHub Pages
 
-- Эмуляция PetStore API на Flask
-- Реализует все CRUD-операции пользователей: CREATE/GET/PUT/DELETE /v2/user/{username}
-- Поддерживает аутентификацию: GET /v2/user/login, GET /v2/user/logout
-- Хранение пользователей в оперативной памяти (имитация БД)
-- Возвращает корректные HTTP-статусы и заголовки как реальный API
+## URL отчетов GitHub Pages:
+```bash
+https://kapKurgan.github.io/framework-for-testing-functionality-user-management-API/<run_id>/index.html
+```
 
-## Доступно в интерфейсе GitHub:
-- Actions > API Tests > Run workflow
-- Можно выбрать сценарий: Фильтрация по маркерам
+Например
+```bash
+https://kapKurgan.github.io/framework-for-testing-functionality-user-management-API/20432331963/index.html
+```
