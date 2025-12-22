@@ -94,19 +94,19 @@ ReportGenerator (reports/report_generator.py)
 
 # Как запускать тесты
 
-## Локально
+## Локальный запуск тестов
 
-Базовый запуск
+### Базовый запуск
 ```bash
 pytest
 ```
 
-С подробным выводом
+### С подробным выводом
 ```bash
 pytest -v -s
 ```
 
-Запуск по маркерам
+### Запуск по маркерам
 ```bash
 pytest -m smoke          # Только критические тесты
 pytest -m regression     # Только регрессионные тесты
@@ -114,28 +114,50 @@ pytest -m login          # Только тесты входа
 ```
 Все маркеры указаны в разделе: Тестовые сценарии
 
-С генерацией HTML отчета
+### С генерацией HTML отчета
 ```bash
 pytest --html=reports/pytest_report.html
 ```
 
-С генерацией Allure отчета
+### С генерацией Allure отчета
 ```bash
 pytest --alluredir=reports/allure-results
 ```
 
-Локальный просмотр Allure отчета
+## Локальный просмотр Allure отчета
 ```bash
 allure serve reports/allure-results
 ```
 
-## В GitHub Actions
+## Запуск тестов в GitHub Actions
 
 Автоматический запуск через интерфейс GitHub:
 - Перейдите в Actions > API Tests > Run workflow
 - Выберите сценарий тестов (например, -m login)
 - Нажмите Run workflow
 - Система выполнит тесты напрямую к https://petstore.swagger.io/v2
+
+## URL отчетов GitHub Pages:
+
+### HTML
+```bash
+https://kapKurgan.github.io/framework-for-testing-functionality-user-management-API/<run_id>/pytest-report.html
+```
+
+Например:
+```bash
+https://kapKurgan.github.io/framework-for-testing-functionality-user-management-API/20433392081/pytest-report.html
+```
+
+### ALLURE 
+```bash
+https://kapKurgan.github.io/framework-for-testing-functionality-user-management-API/<run_id>/allure-report/index.html
+```
+
+Например:
+```bash
+https://kapKurgan.github.io/framework-for-testing-functionality-user-management-API/20433392081/allure-report/index.html
+```
 
 ## Требования
 - Python 3.12+
@@ -154,29 +176,3 @@ Workflow автоматически:
 - Запускает тесты к реальному API
 - Генерирует HTML-отчеты
 - Публикует отчеты в GitHub Pages
-
-## URL отчетов GitHub Pages:
-
-### HTML
-
-```bash
-https://kapKurgan.github.io/framework-for-testing-functionality-user-management-API/<run_id>/pytest-report.html
-```
-
-
-Например:
-```bash
-https://kapKurgan.github.io/framework-for-testing-functionality-user-management-API/20433392081/pytest-report.html
-```
-
-### ALLURE 
-
-```bash
-https://kapKurgan.github.io/framework-for-testing-functionality-user-management-API/<run_id>/allure-report/index.html
-```
-
-
-Например:
-```bash
-https://kapKurgan.github.io/framework-for-testing-functionality-user-management-API/20433392081/allure-report/index.html
-```
