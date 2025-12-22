@@ -16,22 +16,26 @@
 ## Структура проекта
 
 ```bash
-user-api-test-framework/
-+-- pytest.ini                      # Конфигурация pytest
-+-- conftest.py                     # Глобальные фикстуры
-+-- requirements.txt                # Зависимости
-+-- base/
-¦   +-- __init__.py
-¦   L-- base_test.py               # Базовый класс с HTTP-методами
-+-- generators/
-¦   +-- __init__.py
-¦   L-- data_generator.py          # Генерация тестовых данных
-+-- reports/
-¦   +-- __init__.py
-¦   L-- report_generator.py        # Генерация отчетов
-L-- tests/
-    +-- __init__.py
-    L-- test_user_api.py           # Тестовые сценарии
+framework-for-testing-functionality-user-management-API/
+|
+|-- pytest.ini                 # Конфигурация pytest
+|-- conftest.py                # Фикстуры и настройка окружения
+|-- requirements.txt           # Зависимости Python
+|-- Dockerfile.base            # Dockerfile для сборки контейнера
+|-- docker-compose.ci.yaml     # Конфигурация Docker Compose для CI
+|-- mock_petstore.py           # HTTP Mock-сервер PetStore API (создан с использованием AI)
+|-- .env.example               # Пример переменных окружения
+|-- .github/
+|-- workflows/
+|   -- api-tests.yml           # GitHub Actions workflow
+|-- base/
+|   -- base_test.py            # Базовый класс с HTTP-методами
+|-- generators/
+|   -- data_generator.py       # Генератор тестовых данных
+|-- reports/
+|   -- report_generator.py     # Генератор отчетов
+|-- tests/
+    -- test_user_api.py        # Тестовые сценарии
 ```
 
 ## Основные компоненты
@@ -130,3 +134,20 @@ allure serve reports/allure-results
 ```bash
 pip install -r requirements.txt
 ```
+
+## Ключевые возможности:
+- HTTP Mock-сервер
+- Контейнеризация Docker и Docker Compose
+- Автоматический запуск тестов в GitHub Actions
+
+Mock PetStore Server (`mock_petstore.py`)   - с использованием AI
+
+- Эмуляция PetStore API на Flask
+- Реализует все CRUD-операции пользователей: CREATE/GET/PUT/DELETE /v2/user/{username}
+- Поддерживает аутентификацию: GET /v2/user/login, GET /v2/user/logout
+- Хранение пользователей в оперативной памяти (имитация БД)
+- Возвращает корректные HTTP-статусы и заголовки как реальный API
+
+Доступно в интерфейсе GitHub:
+Actions > API Tests > Run workflow
+Можно выбрать сценарий: Фильтрация по маркерам

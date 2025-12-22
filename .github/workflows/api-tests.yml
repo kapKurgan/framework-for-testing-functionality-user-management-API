@@ -8,7 +8,7 @@ on:
     inputs:
       SCENARIO:
         type: 'choice'
-        default: ' '
+        default: '-m smoke'
         options:
           - '-m login'
           - '-m smoke'
