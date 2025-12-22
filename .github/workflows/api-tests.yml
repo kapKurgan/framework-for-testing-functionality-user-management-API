@@ -11,8 +11,18 @@ on:
         default: '-m login'
         options:
           - '-m login'
-          - 'tests/test_user_api.py'
-          - '--html=reports/pytest_report.html -m smoke'
+          - '-m smoke'
+          - '-m regression'
+          - '-m user'
+          - '-m create'
+          - '-m login'
+          - '-m update'
+          - '-m delete'
+          - '-m performance'
+          - '-v'
+          - '--strict-markers'
+          - '--tb=short'
+          - '--disable-warnings'
         required: true
         description: 'Выберите набор тестов для запуска'
 
