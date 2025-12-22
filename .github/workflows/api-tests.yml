@@ -105,7 +105,7 @@ on:
           - '-m update'
           - '-m delete'
           - '-m performance'
-          - '-v -s'
+          - '-v'
         required: true
         description: 'Выберите набор тестов'
 

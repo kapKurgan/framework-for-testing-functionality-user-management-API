@@ -28,7 +28,8 @@ framework-for-testing-functionality-user-management-API/
 |-- reports/
 |   `-- report_generator.py        # Генератор отчетов
 `-- tests/
-    `-- test_user_api.py           # Тестовые сценарии```
+    `-- test_user_api.py           # Тестовые сценарии
+```
 
 ## Основные компоненты
 
@@ -155,11 +156,22 @@ Workflow автоматически:
 - Публикует отчеты в GitHub Pages
 
 ## URL отчетов GitHub Pages:
+
+HTML
 ```bash
-https://kapKurgan.github.io/framework-for-testing-functionality-user-management-API/<run_id>/index.html
+https://kapKurgan.github.io/framework-for-testing-functionality-user-management-API/<run_id>/pytest-report.html
 ```
 
 Например
 ```bash
-https://kapKurgan.github.io/framework-for-testing-functionality-user-management-API/20432331963/index.html
+https://kapKurgan.github.io/framework-for-testing-functionality-user-management-API/20433160653/pytest-report.html
+```
+
+ALLURE 
+```bash
+https://kapKurgan.github.io/framework-for-testing-functionality-user-management-API/<run_id>/allure-report/index.html
+```
+
+```bash
+https://kapKurgan.github.io/framework-for-testing-functionality-user-management-API/20433160653/allure-report/index.html
 ```
