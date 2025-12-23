@@ -23,8 +23,11 @@
 - [Поддерживаемые сценарии](#поддерживаемые-сценарии)
 - [Тестовые сценарии](#тестовые-сценарии)
 - [Локальный запуск тестов](#локальный-запуск-тестов)
-- [](#)
-- [](#)
+- [Локальный просмотр Allure отчета](#локальный-просмотр-allure-отчета)
+- [CI/CD](#cicd)
+- [URL отчетов GitHub Pages](#url-отчетов-github-pages)
+- [Требования](#требования)
+- [Интеграция с GitHub Actions](#интеграция-с-github-actions)
 
 ---
 
@@ -45,6 +48,8 @@ framework-for-testing-functionality-user-management-API/
     `-- test_user_api.py           # Тестовые сценарии
 ```
 
+---
+
 ## Основные компоненты
 
 [**BaseTest**](./base/base_test.py)
@@ -56,14 +61,14 @@ framework-for-testing-functionality-user-management-API/
 - Методы для всех операций: create_user, get_user, update_user, delete_user, login, logout
 - Валидация JSON-схем
 
-**UserDataGenerator** (generators/data_generator.py)
+[**UserDataGenerator**](./generators/data_generator.py)
 
 - Генерация реалистичных тестовых данных через Faker
 - Поддержка различных локализаций
 - Генерация валидных и невалидных данных
 - Создание пакетных данных
 
-**TestUserAPI** (tests/test_user_api.py)
+[**TestUserAPI**](./tests/test_user_api.py)
 
 - 14 тестовых сценариев покрывающих все граничные случаи
 - 100% покрытие CRUD-операций
@@ -71,7 +76,7 @@ framework-for-testing-functionality-user-management-API/
 - Автоматическая очистка тестовых данных
 - Параметризованные негативные тесты
 
-**ReportGenerator** (reports/report_generator.py)
+[**ReportGenerator**](./reports/report_generator.py)
 
 - Генерация HTML, JSON и текстовых отчетов
 - Автоматический расчет статистики
@@ -130,7 +135,7 @@ pytest -m smoke          # Только критические тесты
 pytest -m regression     # Только регрессионные тесты
 pytest -m login          # Только тесты входа
 ```
-Все маркеры указаны в разделе: Тестовые сценарии
+Все маркеры указаны в разделе: [Тестовые сценарии](#тестовые-сценарии)
 
 ### С генерацией HTML отчета
 ```bash
@@ -142,20 +147,30 @@ pytest --html=reports/pytest_report.html
 pytest --alluredir=reports/allure-results
 ```
 
+---
+  
 ## Локальный просмотр Allure отчета
 ```bash
 allure serve reports/allure-results
 ```
 
-## Запуск тестов в GitHub Actions
+---
+
+## CI/CD
+
+В этом проекте включена интеграция с GitHub Actions. Вы можете выполнять сценарии в автономном режиме и автоматически публиковать отчеты на страницах GitHub.
+
+Конфигурацию можно найти в [.github.com/kapKurgan/framework-for-testing-functionality-user-management-API/blob/master/.github/workflows/api-tests.yml](./.github.com/kapKurgan/framework-for-testing-functionality-user-management-API/blob/master/.github/workflows/api-tests.yml).   
 
 Автоматический запуск через интерфейс GitHub:
-- Перейдите в Actions > API Tests > Run workflow
-- Выберите сценарий тестов (например, -m login)
-- Нажмите Run workflow
+- [Перейдите в Actions > API Tests > Run workflow](https://github.com/kapKurgan/framework-for-testing-functionality-user-management-API/actions)
+- Выберите сценарий тестов (например, **-m login**)
+- Нажмите **workflow**
 - Система выполнит тесты напрямую к https://petstore.swagger.io
 
-## URL отчетов GitHub Pages:
+---
+
+## URL отчетов GitHub Pages
 
 ### HTML
 ```bash
@@ -174,6 +189,7 @@ https://kapKurgan.github.io/framework-for-testing-functionality-user-management-
 Например:
 https://kapKurgan.github.io/framework-for-testing-functionality-user-management-API/20436579827/allure-report/index.html
 
+---
 
 ## Требования
 - Python 3.12+
@@ -184,6 +200,8 @@ https://kapKurgan.github.io/framework-for-testing-functionality-user-management-
 pip install -r requirements.txt
 ```
 
+--- 
+
 ## Интеграция с GitHub Actions
 
 Workflow автоматически:
@@ -193,5 +211,4 @@ Workflow автоматически:
 - Генерирует HTML-отчеты
 - Публикует отчеты в GitHub Pages
 
-## Лицензия
-MIT License - свободно использовать и модифицировать.
+---
