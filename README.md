@@ -1,4 +1,4 @@
-# Фреймворк для автоматизированного тестирования API управления пользователями
+# Тестирование API "Управление пользователями"
 
 ## Цель работы
 
@@ -160,10 +160,10 @@ allure serve reports/allure-results
 
 В этом проекте включена интеграция с GitHub Actions. Вы можете выполнять сценарии в автономном режиме и автоматически публиковать отчеты на страницах GitHub.
 
-Конфигурацию можно найти в [./.github/workflows/api-tests.yml](./.github/workflows/api-tests.yml).   
+Конфигурацию можно найти в [api-tests.yml](./.github/workflows/api-tests.yml).   
 
 Автоматический запуск через интерфейс GitHub:
-- [Перейдите в Actions > API Tests > Run workflow](https://github.com/kapKurgan/framework-for-testing-functionality-user-management-API/actions)
+- [Перейдите в Actions > API Tests > Run workflow](https://github.com/kapKurgan/testing-user-management-api/actions)
 - Выберите сценарий тестов (например, **-m login**)
 - Нажмите **workflow**
 - Система выполнит тесты напрямую к https://petstore.swagger.io
@@ -174,20 +174,20 @@ allure serve reports/allure-results
 
 ### HTML
 ```bash
-https://kapKurgan.github.io/framework-for-testing-functionality-user-management-API/<run_id>/pytest-report.html
+https://kapKurgan.github.io/testing-user-management-api/<run_id>/pytest-report.html
 ```
 
 Например:
-https://kapKurgan.github.io/framework-for-testing-functionality-user-management-API/20436579827/pytest-report.html
+https://kapKurgan.github.io/testing-user-management-api/20436579827/pytest-report.html
 
 
 ### ALLURE 
 ```bash
-https://kapKurgan.github.io/framework-for-testing-functionality-user-management-API/<run_id>/allure-report/index.html
+https://kapKurgan.github.io/testing-user-management-api/<run_id>/allure-report/index.html
 ```
 
 Например:
-https://kapKurgan.github.io/framework-for-testing-functionality-user-management-API/20436579827/allure-report/index.html
+https://kapKurgan.github.io/testing-user-management-api/20436579827/allure-report/index.html
 
 ---
 
