@@ -160,7 +160,7 @@ allure serve reports/allure-results
 
 В этом проекте включена интеграция с GitHub Actions. Вы можете выполнять сценарии в автономном режиме и автоматически публиковать отчеты на страницах GitHub.
 
-Конфигурацию можно найти в [.github.com/kapKurgan/framework-for-testing-functionality-user-management-API/blob/master/.github/workflows/api-tests.yml](./.github.com/kapKurgan/framework-for-testing-functionality-user-management-API/blob/master/.github/workflows/api-tests.yml).   
+Конфигурацию можно найти в [./.github/workflows/api-tests.yml](./.github/workflows/api-tests.yml).   
 
 Автоматический запуск через интерфейс GitHub:
 - [Перейдите в Actions > API Tests > Run workflow](https://github.com/kapKurgan/framework-for-testing-functionality-user-management-API/actions)
